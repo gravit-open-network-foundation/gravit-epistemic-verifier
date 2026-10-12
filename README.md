@@ -33,22 +33,25 @@ This repository is a public reference implementation of that layer.
 | Component | Description |
 |-----------|-------------|
 | `specification/` | JSON Schemas for epistemic commitments, truth vectors, audit trails |
-| `gravit_verifier/` | Working verifier, GRTVP consensus, audit generator (no stubs) |
+| `gravit_verifier/` | Research demo of a verifier, GRTVP consensus and audit generator (contains placeholders, e.g. the formal-proof step) |
 | `tests/` | Adversarial tests (sandwich, replay, intent substitution) |
-| `benchmarks/` | Latency (<50ms), gas overhead (<10%), attack success rate (0.7%) |
+| `benchmarks/` | Latency script (results depend on hardware); gas figure is a hard-coded placeholder |
 | `integrations/allunity/` | How EURAU/CHFAU serve as regulated anchor for this category |
 
 ---
 
-## Measurable Results (v1.0)
+## Results
 
-| Metric | Value |
-|--------|-------|
-| Verification latency (p95) | 47 ms |
-| Additional gas overhead | 8% |
-| Attack success without Gravit | 23% |
-| Attack success with Gravit | 0.7% |
-| False positive rate | 1.2% |
+> **Correction (12 Oct 2026).** An earlier version of this section listed "p95 latency 47 ms",
+> "gas overhead 8 %", "attack success 23 % → 0.7 %" and "false positive rate 1.2 %". No code in
+> this repository computes those figures (the gas value is a constant in `bench_cost.py`; the
+> others appear only in a hand-written `benchmarks/results/v1.0_report.json`, kept for the record).
+> They have been removed. This repository is a research demonstration.
+>
+> The maintained reference implementation is the
+> [Gravit Verifier](https://github.com/gravit-open-network-foundation/verifier); its conformance and
+> adversarial results are reproduced with one command by the
+> [evaluation pack](https://github.com/gravit-open-network-foundation/gravit-eval-pack).
 
 ---
 
