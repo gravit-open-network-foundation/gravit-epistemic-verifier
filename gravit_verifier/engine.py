@@ -5,7 +5,7 @@ Core epistemic verification engine.
 import hashlib
 import json
 import time
-from typing import Any, Dict, Optional
+from typing import Any
 
 from .adversarial import AdversarialDetector
 from .models import EpistemicCommitment, TruthVector, VerificationResult
@@ -32,12 +32,12 @@ class VerificationEngine:
         self.history = []
         self._seen_replay_keys = set()
 
-    def verify(self, intent: Dict[str, Any], action: Optional[Dict[str, Any]] = None) -> VerificationResult:
+    def verify(self, intent: dict[str, Any], action: dict[str, Any] | None = None) -> VerificationResult:
         if action is None:
             return self._verify_single_request(intent or {})
         return self._verify_intent_action_pair(intent or {}, action or {})
 
-    def _verify_single_request(self, request: Dict[str, Any]) -> VerificationResult:
+    def _verify_single_request(self, request: dict[str, Any]) -> VerificationResult:
         start = time.perf_counter()
         commitment = EpistemicCommitment(
             agent_id=request.get("agent_id", ""),
@@ -80,7 +80,7 @@ class VerificationEngine:
             details={"consistency": consistency, "truth_vector": truth_vector.__dict__, "mode": "single"},
         )
 
-    def _verify_intent_action_pair(self, intent: Dict[str, Any], action: Dict[str, Any]) -> VerificationResult:
+    def _verify_intent_action_pair(self, intent: dict[str, Any], action: dict[str, Any]) -> VerificationResult:
         start = time.perf_counter()
         intent_text = intent.get("natural_language", "") if isinstance(intent, dict) else ""
         action_text = self._action_to_text(action)
@@ -118,16 +118,16 @@ class VerificationEngine:
             },
         )
 
-    def _hash_dict(self, data: Dict[str, Any]) -> str:
+    def _hash_dict(self, data: dict[str, Any]) -> str:
         return hashlib.sha256(json.dumps(data or {}, sort_keys=True, default=str).encode()).hexdigest()
 
     def _replay_key(self, agent_id: str, action: str, timestamp: str) -> str:
-        return "|".join([agent_id, action, timestamp])
+        return f"{agent_id}|{action}|{timestamp}"
 
     def _lineage_commitment(self, left: str, right: str, timestamp: str) -> str:
         return hashlib.sha256(f"{left}|{right}|{timestamp}".encode()).hexdigest()
 
-    def _action_to_text(self, action: Dict[str, Any]) -> str:
+    def _action_to_text(self, action: dict[str, Any]) -> str:
         operations = action.get("operations", []) if isinstance(action, dict) else []
         parts = [action.get("note", "") if isinstance(action, dict) else ""]
         for operation in operations:
@@ -155,7 +155,7 @@ class VerificationEngine:
         )
         return hashlib.sha256(data.encode()).hexdigest()
 
-    def _audit_proof(self, intent_hash: str, action_hash: str, semantic_score: float, policy_score: float, adversarial_score: float, proof: str, valid: bool) -> Dict[str, Any]:
+    def _audit_proof(self, intent_hash: str, action_hash: str, semantic_score: float, policy_score: float, adversarial_score: float, proof: str, valid: bool) -> dict[str, Any]:
         return {
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "intent_hash": intent_hash,
