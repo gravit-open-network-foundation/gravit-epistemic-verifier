@@ -3,15 +3,15 @@ Data models for epistemic verification.
 """
 
 from dataclasses import dataclass, field
-from typing import List, Dict, Any
+from typing import Any
 
 
 @dataclass
 class EpistemicCommitment:
     agent_id: str
     action: str
-    reasoning_chain: List[str] = field(default_factory=list)
-    context: Dict[str, Any] = field(default_factory=dict)
+    reasoning_chain: list[str] = field(default_factory=list)
+    context: dict[str, Any] = field(default_factory=dict)
     provenance_root: str = ""
     timestamp: str = ""
 
@@ -37,8 +37,8 @@ class VerificationResult:
     verdict: str = "NEEDS_AUDIT"
     lineage_commitment: str = ""
     formal_proof_available: bool = False
-    audit_proof: Dict[str, Any] = field(default_factory=dict)
-    details: Dict[str, Any] = field(default_factory=dict)
+    audit_proof: dict[str, Any] = field(default_factory=dict)
+    details: dict[str, Any] = field(default_factory=dict)
 
 
 ValidationResult = VerificationResult

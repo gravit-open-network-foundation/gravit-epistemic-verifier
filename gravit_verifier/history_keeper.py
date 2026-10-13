@@ -3,7 +3,7 @@ History Keeper — persistent storage of epistemic proofs.
 """
 
 import json
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 
 class HistoryKeeper:
@@ -12,19 +12,19 @@ class HistoryKeeper:
         self.proofs = []
         self._load()
 
-    def store(self, proof: Dict[str, Any]) -> str:
+    def store(self, proof: dict[str, Any]) -> str:
         proof_id = proof.get("trace_id", f"proof_{len(self.proofs)}")
         self.proofs.append({"id": proof_id, "data": proof, "timestamp": proof.get("timestamp")})
         self._save()
         return proof_id
 
-    def get(self, proof_id: str) -> Optional[Dict[str, Any]]:
+    def get(self, proof_id: str) -> dict[str, Any] | None:
         for p in self.proofs:
             if p["id"] == proof_id:
                 return p["data"]
         return None
 
-    def list(self, limit: int = 100) -> List[Dict[str, Any]]:
+    def list(self, limit: int = 100) -> list[dict[str, Any]]:
         return self.proofs[-limit:]
 
     def _load(self):

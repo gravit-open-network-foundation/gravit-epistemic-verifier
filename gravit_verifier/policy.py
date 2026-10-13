@@ -4,11 +4,11 @@ Policy validator for intent/action approval.
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any
 
 
 class PolicyValidator:
-    def validate(self, intent: Dict[str, Any], action: Dict[str, Any]) -> Dict[str, float]:
+    def validate(self, intent: dict[str, Any], action: dict[str, Any]) -> dict[str, float]:
         intent_text = (intent or {}).get("natural_language", "").lower()
         operations = (action or {}).get("operations", [])
         action_text = " ".join(str(operation) for operation in operations).lower()

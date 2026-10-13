@@ -9,10 +9,10 @@ from .models import EpistemicCommitment, TruthVector, ValidationResult
 
 __version__ = "1.0.0"
 __all__ = [
-	"VerificationEngine",
-	"EpistemicEngine",
-	"VerificationResult",
 	"EpistemicCommitment",
+	"EpistemicEngine",
 	"TruthVector",
 	"ValidationResult",
+	"VerificationEngine",
+	"VerificationResult",
 ]

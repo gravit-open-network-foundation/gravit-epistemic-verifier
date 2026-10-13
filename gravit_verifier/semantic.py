@@ -5,11 +5,10 @@ Semantic verifier for intent/action alignment.
 from __future__ import annotations
 
 import re
-from typing import Dict
 
 
 class SemanticVerifier:
-    def score(self, intent_text: str, action_text: str) -> Dict[str, float]:
+    def score(self, intent_text: str, action_text: str) -> dict[str, float]:
         intent_tokens = self._tokens(intent_text)
         action_tokens = self._tokens(action_text)
         if not intent_tokens or not action_tokens:

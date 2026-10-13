@@ -2,18 +2,18 @@
 Audit trail generator for regulators.
 """
 
-import json
 import hashlib
-from typing import Dict, Any
+import json
+from typing import Any
 
 
 class AuditProofGenerator:
-    def generate(self, verification_result: Dict[str, Any]) -> str:
+    def generate(self, verification_result: dict[str, Any]) -> str:
         """Generate cryptographic proof for regulator."""
         data = json.dumps(verification_result, sort_keys=True)
         return hashlib.sha256(data.encode()).hexdigest()
 
-    def to_human_readable(self, proof: str, full_data: Dict[str, Any]) -> str:
+    def to_human_readable(self, proof: str, full_data: dict[str, Any]) -> str:
         """Generate human-readable audit report for BaFin/FINMA."""
         return f"""
 === EPISTEMIC VERIFICATION AUDIT REPORT ===
